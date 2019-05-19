@@ -14,7 +14,14 @@ enum LedgerId {
   main,
 }
 
-class ScreenWithNavigationBar extends StatelessWidget {
+class ScreenWithNavigationBar extends StatefulWidget {
+  @override
+  _ScreenWithNavigationBarState createState() => _ScreenWithNavigationBarState();
+}
+
+class _ScreenWithNavigationBarState extends State<ScreenWithNavigationBar> {
+  TextStyle _messageStyle = TextStyle(fontSize: 14);
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -23,9 +30,14 @@ class ScreenWithNavigationBar extends StatelessWidget {
         children: {
           LedgerId.navBar: (context, data) => LayoutBuilderId(
             id: LedgerId.navBar,
-            child: Container(
-              color: Colors.red.withOpacity(0.8),
-              child: Padding(padding: EdgeInsets.all(26),child: Text("Hello world")),
+            child: GestureDetector(
+              onTap: () => setState(() {
+                _messageStyle = _messageStyle.copyWith(fontSize: _messageStyle.fontSize * 2);
+              }),
+              child: Container(
+                color: Colors.red.withOpacity(0.8),
+                child: Padding(padding: EdgeInsets.all(26),child: Text("Hello world", style: _messageStyle,)),
+              ),
             ),
           ),
           LedgerId.main: (context, data) => LayoutBuilderId(
